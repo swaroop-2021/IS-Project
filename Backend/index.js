@@ -26,13 +26,13 @@ app.post('/api',async(req,res,next)=>{
 
     const options = {
         from: 'swaroopanegundi404@gmail.com',
-        to: 'swaroopra2001@gmail.com',
+        to: req.body.email,
         subject: 'OTP For Login',
         html: `OTP is ${key}` 
     };
       
     await transporter.sendMail(options); 
-    res.status(200).send(JSON.stringify({otp:key}));
+    res.status(200).json({otp:key});
 })
 
 app.listen(80,()=>{console.log('Listening on port 80')})
