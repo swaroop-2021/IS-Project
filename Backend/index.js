@@ -8,7 +8,8 @@ app.use(express.json());
 
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.forwardemail.net',
+    host: 'smtp.gmail.com',
+    service:'gmail',
     port: 465,
     secure: true,
     auth: {
@@ -21,15 +22,17 @@ const transporter = nodemailer.createTransport({
 app.post('/api',async(req,res,next)=>{
     console.log(req.body);
 
+    const key=Math.floor(Math.random()*(9999-1000)+1000);
+
     const options = {
         from: 'swaroopanegundi404@gmail.com',
         to: 'swaroopra2001@gmail.com',
-        subject: 'hello world',
-        body: 'hello'
+        subject: 'OTP For Login',
+        html: `OTP is ${key}` 
     };
       
     await transporter.sendMail(options); 
-    res.status(200).send('');
+    res.status(200).send(JSON.stringify({otp:key}));
 })
 
 app.listen(80,()=>{console.log('Listening on port 80')})
